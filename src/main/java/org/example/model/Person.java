@@ -21,9 +21,15 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @OneToMany(mappedBy = "owner")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private List<Item> items;
+    @OneToOne(mappedBy = "person")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE) //при сохранении человека связанный с ним паспорт тоже будет сохранятся в БД
+    private Passport passport;
+
+//    @OneToMany(mappedBy = "owner")
+//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//    private List<Item> items;
+
+
 
     public Person() {
     }
@@ -57,22 +63,31 @@ public class Person {
         this.age = age;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Passport getPassport() {
+        return passport;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+        passport.setPerson(this);
     }
 
-    public void addItem(Item item){
-        if(this.items == null){
-            this.items = new ArrayList<>();
-        }
-
-        this.items.add(item);
-        item.setOwner(this);
-    }
+    //    public List<Item> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(List<Item> items) {
+//        this.items = items;
+//    }
+//
+//    public void addItem(Item item){
+//        if(this.items == null){
+//            this.items = new ArrayList<>();
+//        }
+//
+//        this.items.add(item);
+//        item.setOwner(this);
+//    }
 
     @Override
     public String toString() {
