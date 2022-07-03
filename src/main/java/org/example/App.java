@@ -76,12 +76,26 @@ public class App
 //
 //            person.getItems().forEach(i -> i.setOwner(null));
 
-            Person person = session.get(Person.class, 4);
-            Item item = session.get(Item.class, 1);
+//            Person person = session.get(Person.class, 4);
+//            Item item = session.get(Item.class, 1);
+//
+//            item.getOwner().getItems().remove(item);
+//            item.setOwner(person);
+//            person.getItems().add(item);
 
-            item.getOwner().getItems().remove(item);
-            item.setOwner(person);
-            person.getItems().add(item);
+            //Cascading Hibernate
+
+            Person person = new Person("Test cascading", 30);
+
+            Item item1 = new Item("Test cascading item1");
+            Item item2 = new Item("Test cascading item2");
+            Item item3 = new Item("Test cascading item3");
+
+            person.addItem(item1);
+            person.addItem(item2);
+            person.addItem(item3);
+
+            session.save(person);
 
             session.getTransaction().commit();
         }
